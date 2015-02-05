@@ -1,0 +1,47 @@
+Change log for curve.js
+-----------------------
+
+2.3.1
+
+FIX: Made the extension more "bullet-proof" in case other extensions should happen to have the same name.
+FIX: JSDoc return type fixed (Array -> Float32Array).
+FIX: Minor touch-ups/improvements
+ADD: Added two new file versions of the implementation - one pure function if you don't feel comfortable using
+extensions, as well as a pure mathematical function to return a point
+array for the spline without drawing anything (canvas not required with this version).
+
+2.3
+
+CHG: Using typed arrays also for resulting array (Float32)
+CHG: Default segment value is now 25 instead of 20 (dynamic approach is being considered).
+IMP: Speed improvements
+FIX: Fixed double point entries in result array
+
+2.2
+
+IMP: Using typed arrays internally for cached tension values for speed improvement
+REM: A left over and unnecessary console.log removed
+
+2.1.1
+
+FIX: When closed, length of close array was still reflecting total length internally resulting in empty entries
+as the closed section is calculated separately.
+
+2.1
+
+ADD: New option: closed loop
+FIX: End point wasn't properly considered
+
+2.0
+
+New re-release of smooth line. Original can be found here:
+http://www.codeproject.com/Tips/562175/Draw-Smooth-Line-through-points-with-HTML-Canvas
+
+ADD: Optimized inner loop with a caching step
+CHG: Removed redundant code
+CHG: Cleaned up var declarations
+CHG: Removed internal moveTo() to conform better to context behavior in general
+
+
+(c) Epistemex 2013-2014
+License: MIT
