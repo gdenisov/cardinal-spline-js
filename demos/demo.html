@@ -128,6 +128,7 @@
 	</div>
 
 <script src="../curve.min.js"></script>
+<script src="../curve_calc.min.js"></script>
 <script>
 
 	/*
@@ -208,6 +209,7 @@
 		}
 		ctx.stroke();
 
+
 		// show original points
 		if (o.points) {
 			ctx.lineWidth = 1;
@@ -221,6 +223,15 @@
 
 				ctx.strokeRect(pts[i] - 2, pts[i+1] - 2, 4, 4);
 			}
+		}
+		
+		// Show calculated points
+		const calculatedPoints = getCurvePoints(pts, o.tension, o.segments, o.closed);
+		console.info('Calculated points', calculatedPoints);
+		ctx.lineWidth = 1;
+		for(var i = 0; i < calculatedPoints.length; i += 2) {
+			ctx.strokeStyle = 'rgba(0,0,255,0.5)';
+			ctx.strokeRect(calculatedPoints[i] - 1, calculatedPoints[i+1] - 1, 2, 2);
 		}
 	}
 
