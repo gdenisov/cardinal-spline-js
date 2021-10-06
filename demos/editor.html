@@ -167,6 +167,7 @@
 	ctx.lineJoin = 'round';
 
 	randomize();
+	prepareContainer();
 	drawCurveDemo();
 
 	document.getElementById('numSegments').addEventListener('change', drawCurveDemo, false);
@@ -255,32 +256,60 @@
 		}
 		
 		// Add drag handles
-		if (o.points) {
-			var container = document.getElementById('editContainer');
-			container.addEventListener('dragover', event => {
-				console.log('dragged over');
-				event.preventDefault();
+		var container = document.getElementById('editContainer');
+		for (var i = 0; i < pts.length; i += 2) {
+			var div = document.createElement('div');
+			div.classList.add('editHandle');
+			div.style.top = pts[i+1] + 'px';
+			div.style.left = pts[i] + 'px';
+			div.id = 'editHandle-' + (i + 1);
+			div.dataset.index = i;
+			div.draggable = true;
+			div.addEventListener('dragstart', event => {
+				var style = window.getComputedStyle(event.target, null);
+				var data = {
+					x: parseInt(style.getPropertyValue("left"),10) - event.clientX,
+					y: parseInt(style.getPropertyValue("top"),10) - event.clientY,
+					index: parseInt(event.target.dataset.index),
+					id: event.target.id
+				};
+				console.log('started', { data });
+				event.dataTransfer.setData('application/json', JSON.stringify(data));
 			});
-			container.addEventListener('drop', event => {
-				console.log('dropped');
-				// event.preventDefault();
-			});
+			container.appendChild(div);
 			
-			for (var i = 0; i < pts.length; i += 2) {
-				var div = document.createElement('div');
-				div.classList.add('editHandle');
-				div.style.top = pts[i+1] + 'px';
-				div.style.left = pts[i] + 'px';
-				div.draggable = true;
-				div.addEventListener('dragstart', event => {
-					console.log('started');
-					event.dataTransfer.setData('Text', 'Drag Handle')
-				});
-				container.appendChild(div);
-				
-				//ctx.strokeRect(pts[i] - 2, pts[i+1] - 2, 4, 4);
-			}
+			//ctx.strokeRect(pts[i] - 2, pts[i+1] - 2, 4, 4);
 		}
+	}
+	
+	function prepareContainer() {
+		// Drop logic based on https://stackoverflow.com/a/6239882/679240
+		var container = document.getElementById('editContainer');
+		container.addEventListener('dragover', event => {
+			console.log('dragged over');
+			event.preventDefault();
+		});
+		container.addEventListener('drop', event => {
+			console.log('dropped');
+			
+			var offset = JSON.parse(event.dataTransfer.getData('application/json'));
+			console.log('offset', offset);
+			
+			var x = (event.clientX + offset.x);
+			var y = (event.clientY + offset.y);
+			
+			var target = document.getElementById(offset.id);
+			target.style.top = y + 'px';
+			target.style.left = x + 'px';
+			event.preventDefault();
+			
+			pts[offset.index] = x;
+			pts[offset.index + 1] = y;
+			
+			drawCurveDemo();
+			
+			return false;
+		});
 	}
 
 </script>
