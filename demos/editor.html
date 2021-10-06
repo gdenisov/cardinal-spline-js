@@ -87,6 +87,22 @@
 			float:right;
 			}
 	</style>
+	
+	<style>
+		#editContainer {
+			position: relative;
+		}
+		
+		.editHandle {
+			position: absolute;
+			background: rgba(255, 0, 255, 0.1);
+			width: 9mm;
+			height: 9mm;
+			border-radius: 50%;
+			margin-left: -4.5mm;
+			margin-top: -4.5mm;
+		}
+	</style>
 </head>
 <body>
 
@@ -119,7 +135,7 @@
 			<button onclick="randomize();drawCurveDemo()">Randomize</button>
 		</div>
 
-		<div>
+		<div id="editContainer">
 			<canvas id="demoCanvas" width="512" height="384"></canvas>
 		</div>
 
@@ -238,6 +254,19 @@
 			ctx.strokeRect(calculatedPoints[i] - 1, calculatedPoints[i+1] - 1, 2, 2);
 		}
 		
+		// Add drag handles
+		if (o.points) {
+			var container = document.getElementById('editContainer');
+			for (var i = 0; i < pts.length; i += 2) {
+				var div = document.createElement('div');
+				div.classList.add('editHandle');
+				div.style.top = pts[i+1] + 'px';
+				div.style.left = pts[i] + 'px';
+				container.appendChild(div);
+				
+				//ctx.strokeRect(pts[i] - 2, pts[i+1] - 2, 4, 4);
+			}
+		}
 	}
 
 </script>
