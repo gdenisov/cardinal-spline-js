@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 
-<!-- *******************************************************************
+<!-- 
+	Spline editor, based on Epistemx's Cardinal Spline.
+
+     *******************************************************************
 	 **	    Cardinal spline for canvas extension demo.
 	 **
 	 **	    (c) Epistemex (www.epistemex.com).
@@ -10,7 +13,7 @@
 -->
 
 <head>
-	<title>Canvas cardinal (smooth) curve extension - Epistemex</title>
+	<title>Spline editor</title>
 
 	<style>
 		body {
@@ -89,7 +92,7 @@
 
 	<div id="container">
 
-		<h1>Cardinal spline for canvas</h1>
+		<h1>Cardinal spline editor</h1>
 
 		<p>Draw a smooth curve (cardinal spline, or Catmull-Rom with tension option) through a point set with open or closed end, variable tension and number of segments.
 		The implementation is highly optimized for performance still preserving quality.</p>
@@ -116,14 +119,15 @@
 			<button onclick="randomize();drawCurveDemo()">Randomize</button>
 		</div>
 
-		<canvas id="demoCanvas" width="800" height="400"></canvas>
+		<div>
+			<canvas id="demoCanvas" width="512" height="384"></canvas>
+		</div>
 
 		<div class="footerl">
-			&copy; by <a href="http://github.com/epistemex/">Epistemex</a>.
-			<a href="https://github.com/epistemex/cardinal-spline-js/">Cardinal spline</a> is licensed with a <a href="http://opensource.org/licenses/MIT">MIT license</a>.
+			Based on <a href="http://github.com/epistemex/">Epistemex's</a>.
+			<a href="https://github.com/epistemex/cardinal-spline-js/">Cardinal spline</a> and licensed with a <a href="http://opensource.org/licenses/MIT">MIT license</a>.
 		</div>
 		<div class="footerr">
-			<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAAAWBAMAAADzxCncAAAALVBMVEUAAAB1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3l1d3lAHhJGAAAADnRSTlMAQIC/EDDUW++fIHCPr6s+es0AAAG1SURBVDjL3ZOxSsNQFIb/9LaGVodEBMGh2Ls4CBKJ6KKiouIY1MFJlHRwkuIDuGitk1QfoJROTtL6BE5O4iOUNoXa0jbP4DnXFmywi3HywLnJfw/n4/7nJvB9v0I5SYnfBSNSYRD6amjExE1oRMQNjYATHgFIKQ8pd6ScB6ImxdQmr8WYg30p54pKmV975gYotJkYK4NVwgTofZuSm6noU9STahVW3Hftuw+lfLXO+hYjFjzBqnaZBo5ygUvV6qBIGkCsK6zjFyDqApEa7c1ypeWBSi1PKJTeLMZunZEINISlnm/fEd46dYzl+ghcZo+yCCI67FG1toX1tGiaM+gj7qmy4T2eAO8VT5yScqC36BBBhPKYfJDytSOsCKtcH8HvhjfehdbT1Cx4Lus94Gcjrm2vlemwNPjpsyEjqBq719rASLxdyGP0LCCsA4fHP4zYS1czA0T0PB9vY+hSg4hkGUB1GKE32xggdqm/kA98WlrTtu2VAWKsYdvLvT7CpUrGo540I65ILZ3n2UvASEJSpEpFdeuZ6AWpDIHpBCWuGClgy0EipbOamwfF81/8I/8KUQmH+ATT7TLyTKIr7AAAAABJRU5ErkJggg==">
 		</div>
 	</div>
 
@@ -233,6 +237,7 @@
 			ctx.strokeStyle = 'rgba(0,0,255,0.5)';
 			ctx.strokeRect(calculatedPoints[i] - 1, calculatedPoints[i+1] - 1, 2, 2);
 		}
+		
 	}
 
 </script>
