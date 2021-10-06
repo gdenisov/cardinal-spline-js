@@ -254,7 +254,10 @@
 			ctx.strokeStyle = 'rgba(0,0,255,0.5)';
 			ctx.strokeRect(calculatedPoints[i] - 1, calculatedPoints[i+1] - 1, 2, 2);
 		}
-		
+
+		// Remove old drag handles
+		document.querySelectorAll('.editHandle').forEach(el => el.remove());
+
 		// Add drag handles
 		var container = document.getElementById('editContainer');
 		for (var i = 0; i < pts.length; i += 2) {
@@ -262,7 +265,6 @@
 			div.classList.add('editHandle');
 			div.style.top = pts[i+1] + 'px';
 			div.style.left = pts[i] + 'px';
-			div.id = 'editHandle-' + (i + 1);
 			div.dataset.index = i;
 			div.draggable = true;
 			div.addEventListener('dragstart', event => {
@@ -270,15 +272,12 @@
 				var data = {
 					x: parseInt(style.getPropertyValue("left"),10) - event.clientX,
 					y: parseInt(style.getPropertyValue("top"),10) - event.clientY,
-					index: parseInt(event.target.dataset.index),
-					id: event.target.id
+					index: parseInt(event.target.dataset.index)
 				};
 				console.log('started', { data });
 				event.dataTransfer.setData('application/json', JSON.stringify(data));
 			});
 			container.appendChild(div);
-			
-			//ctx.strokeRect(pts[i] - 2, pts[i+1] - 2, 4, 4);
 		}
 	}
 	
@@ -293,18 +292,10 @@
 			console.log('dropped');
 			
 			var offset = JSON.parse(event.dataTransfer.getData('application/json'));
-			console.log('offset', offset);
-			
-			var x = (event.clientX + offset.x);
-			var y = (event.clientY + offset.y);
-			
-			var target = document.getElementById(offset.id);
-			target.style.top = y + 'px';
-			target.style.left = x + 'px';
+			pts[offset.index] = event.clientX + offset.x;
+			pts[offset.index + 1] = event.clientY + offset.y;
+
 			event.preventDefault();
-			
-			pts[offset.index] = x;
-			pts[offset.index + 1] = y;
 			
 			drawCurveDemo();
 			
